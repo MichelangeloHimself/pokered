@@ -474,8 +474,6 @@ ItemUseBall:
 	ld hl, wEnemyBattleStatus3
 	bit TRANSFORMED, [hl]
 	jr z, .notTransformed
-	ld a, DITTO
-	ld [wEnemyMonSpecies2], a
 	jr .skip6
 
 .notTransformed
@@ -909,7 +907,10 @@ ItemUseMedicine:
 	ld de, wBattleMonStats
 	ld bc, NUM_STATS * 2
 	call CopyData ; copy party stats to in-battle stat data
-	predef DoubleOrHalveSelectedStats
+	xor a
+	ld [wCalculateWhoseStats], a
+	callfar CalculateModifiedStats
+	callfar ApplyBadgeStatBoosts
 	jp .doneHealing
 .healHP
 	inc hl ; hl = address of current HP
