@@ -37,6 +37,7 @@ HealParty:
 	ld hl, Moves
 	ld bc, MOVE_LENGTH
 	call AddNTimes
+
 	ld de, wcd6d
 	ld a, BANK(Moves)
 	call FarCopyData
